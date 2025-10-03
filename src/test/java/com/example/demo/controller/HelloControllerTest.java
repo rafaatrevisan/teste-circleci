@@ -10,6 +10,6 @@ class HelloControllerTest {
     void deveRetornarMensagem() {
         HelloController controller = new HelloController();
         String resposta = controller.hello();
-        assertThat(resposta).isEqualTo("Olá, CI/CD com CircleCI");
+        assertThat(resposta).isEqualTo("Olá, CI/CD com CircleCI!");
     }
 }
