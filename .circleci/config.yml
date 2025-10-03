@@ -1,32 +1,32 @@
 version: 2.1
 
 jobs:
-    build:
-      docker:
-        - image: cimg/openjdk:17.0
-      steps:
-        - checkout
-        - restore_cache:
-            keys:
-              - maven-{{ checksum  "pom.xml" }}
-              - maven-
-        - run:
-            name: Compilar projeto
-            command: mvn -B clean compile
-        - run:
-            name: Rodar testes
-            command: mvn -B test
-        - save_cache:
+  build:
+    docker:
+      - image: cimg/openjdk:17.0
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - maven-{{ checksum "pom.xml" }}
+            - maven-
+      - run:
+          name: Compilar projeto
+          command: mvn -B clean compile
+      - run:
+          name: Rodar testes
+          command: mvn -B test
+      - save_cache:
           paths:
             - ~/.m2
-          key: maven-{{ checksum  "pom.xml" }}
-        - run:
-            name: Empacotar aplicação
-            command: mvn -B package -Dskiptests
-        - persist_to_workspace:
-            root: target
-            paths:
-              - "*.jar"
+          key: maven-{{ checksum "pom.xml" }}
+      - run:
+          name: Empacotar aplicação
+          command: mvn -B package -DskipTests
+      - persist_to_workspace:
+          root: target
+          paths:
+            - "*.jar"
 workflows:
   version: 2
   build_and_test:
